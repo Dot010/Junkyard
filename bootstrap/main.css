@@ -1,0 +1,12 @@
+.navbar {
+    background-color: #ffffff; /* mesma cor do site */
+}
+
+section {
+    padding: 80px 0; /* igual espaçamento */
+}
+
+h1, h2 {
+    font-family: 'Poppins', sans-serif;
+}
+
