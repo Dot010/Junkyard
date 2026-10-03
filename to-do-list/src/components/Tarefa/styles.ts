@@ -1,0 +1,132 @@
+import styled, { css, keyframes } from 'styled-components'
+
+import * as enums from '../../utils/enums/tarefa'
+type TagProps = {
+  prioridade?: enums.Prioridade
+  status?: enums.Status
+  paramentro: 'status' | 'prioridade'
+}
+
+function retornaCorDeFundo(props: TagProps): string {
+  if (props.paramentro === 'prioridade') {
+    if (props.prioridade === enums.Prioridade.URGENTE) return '#e84118'
+    if (props.prioridade === enums.Prioridade.IMPORTANTE) return '#0097e6'
+  } else {
+    if (props.status === enums.Status.PENDENTE) return '#e1b12c'
+    if (props.status === enums.Status.CONCLUIDA) return '#44bd32'
+  }
+  return '#7f8fa6'
+}
+
+const pulsar = keyframes`
+0%, 100% {transform: scale(1)}
+50% {transform: scale(1.06)}
+`
+
+const shake = keyframes`
+0%, 100% {transform: translateX(0)}
+20% {transform: translateX(-4px)}
+40% {transform: translateX(4px)}
+60% {transform: translateX(-3px)}
+80% {transform: translateX(3px)}
+`
+
+const brilho = keyframes`
+0%, 100% {box-shadow: 0 0 0 0 rgba(99, 110, 114, 0)}
+50% {box-shadow: 0 0 0 4px rgba(99, 110, 114, 0.4)}
+`
+
+export const Card = styled.div`
+  background-color: #fcfcfc;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  margin-bottom: 32px;
+  border-radius: 16px;
+
+  label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+`
+
+export const Titulo = styled.h2`
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 8px;
+`
+
+export const Tag = styled.span<TagProps>`
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  background-color: ${(props) => retornaCorDeFundo(props)};
+  border-radius: 8px;
+  margin-right: 16px;
+  display: inline-block;
+`
+
+export const Descricao = styled.textarea`
+  color: #8b8b8b;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: 'Roboto mono', monospace;
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  resize: none;
+  border: none;
+  background-color: transparent;
+`
+
+export const BarraAcoes = styled.div`
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 16px;
+`
+
+export const Botao = styled.button<{
+  $variant?: 'danger' | 'primary' | 'secondary'
+  $disabled?: boolean
+  $active?: boolean
+}>`
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #2f3640;
+  border-radius: 8px;
+  margin-right: 8px;
+
+  ${({ $variant, $active }) =>
+    $variant === 'danger' &&
+    css`
+      background-color: #e84118;
+      ${$active &&
+      css`
+        animation: ${shake} 1.2s ease;
+      `};
+    `}
+  ${({ $variant, $active }) =>
+    $variant === 'primary' &&
+    css`
+      background-color: #0097e6;
+      ${$active &&
+      css`
+        animation: ${pulsar} 1.5s ease;
+      `};
+    `}
+
+     ${({ $variant, $active }) =>
+    $variant === 'secondary' &&
+    css`
+      background-color: #42b883;
+      ${$active &&
+      css`
+        animation: ${brilho} 2s ease;
+      `};
+    `}
+`
